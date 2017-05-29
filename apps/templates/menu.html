@@ -1,0 +1,52 @@
+{% block menu %}
+<style>
+#menu {
+	width:1000px;
+	display:table;
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+}
+#menu ul {
+	list-style:block;
+	line-height:40px;
+	background-color:#da3e3e;
+}
+#menu ul li {
+	display:inline;
+	color:#ffffff;
+	font-size:13pt;
+	text-align:center;
+	padding-right:10px;
+	padding-left:10px;
+}
+#menu a {
+	text-decoration:none;
+	color:#ffffff;
+}
+#menu a:hover {
+	color:#000000;
+}
+</style>
+<div id="menu">
+<ul>
+<li> | </li>
+<li><a href="/"> 넓은 산딸기 </a></li>
+<li> | </li>
+<li><a href="/blog"> 블로그 </a></li>
+<li> | </li>
+<li><a href="/schedule"> 스케줄 </a></li>
+<li> | </li>
+<li><a href="/pmeb"> 용돈 기입장 </a></li>
+<li> | </li>
+{% if login == False %}
+<li><a href="join"> 회원가입 </a></li>
+<li> | </li>
+<li><a href="login"> 로그인 </a></li>
+{% else %}
+<li><a href="logout"> 로그아웃 </a></li>
+{% endif %}
+<li> | </li>
+</ul>
+</div>
+{% endblock %}
