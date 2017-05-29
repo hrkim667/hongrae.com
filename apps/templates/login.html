@@ -1,0 +1,21 @@
+{% extends "menu.html" %}
+<html>
+{% block menu %}
+{{ super() }}
+<style>
+#login {
+	text-align:center;
+}
+</style>
+<div id="login">
+<form method=post>
+<h1> 로그인 </h1>
+<p>ID: <input type=text name=id></p>
+<p>PW: <input type=password name=pw></p>
+<p> {{ message }} </p>
+<input type=submit value=로그인>
+</dl>
+</form>
+</div>
+{% endblock %}
+</html>
