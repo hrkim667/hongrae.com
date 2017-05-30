@@ -1,0 +1,31 @@
+{% extends "menu.html" %}
+<html>
+{% block menu %}
+{{ super() }}
+<style>
+#table {
+	text-align:center;
+	width:1000px;
+	margin:auto;
+}
+h1 {
+	text-align:center;
+}
+</style>
+<h1> 용돈 기입장 </h1>
+<table border="1", id="table">
+<tr>
+<th> 날짜 </th>
+<th> 내용 </th>
+<th> 돈 </th>
+</tr>
+{% for p in pmeb %}
+<tr>
+{% for i in p %}
+<td> {{ i }} </td>
+{% endfor %}
+</tr>
+{% endfor %}
+</table>
+{% endblock %}
+</html>

@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, request, url_for, redirect
 from apps.database import db_session
-from apps.models import User
+from apps.models import User, PMEB
 
 app = Flask(__name__)
 app.secret_key =b'JSz\xf8\x1cR\xdd\x04\xbf>\x15d\x02\x8c\x08\xc0*\x8f?d\x89:\x0b\x87'
@@ -10,6 +10,17 @@ def userList():
     for u in User.query.all():
         user.append(str(u))
     return user
+
+def pmebList():
+    pmeb = list()
+    for p in PMEB.query.all():
+        s = str(p).split(", ")
+        try:
+            s.pop(s.index(session["user"].split(", ")[0]))
+            pmeb.append(s)
+        except:
+            pass
+    return pmeb
 
 def confirmLogin():
     try:
@@ -31,7 +42,7 @@ def login():
     if request.method == 'POST':
         id = request.form["id"]
         pw = request.form["pw"]
-        user = "<User {0}, {1}>".format(id, pw)
+        user = "{0}, {1}".format(id, pw)
         if user in userList():
             session["user"] = user
             return redirect(url_for("index"))
@@ -43,3 +54,7 @@ def login():
 def logout():
     session.pop("user", None)
     return redirect(url_for("index"))
+
+@app.route("/pmeb")
+def pmeb():
+    return render_template("pmeb.html", pmeb=pmebList())
