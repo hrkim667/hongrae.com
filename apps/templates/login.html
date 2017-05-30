@@ -3,11 +3,10 @@
 {% block menu %}
 {{ super() }}
 <style>
-#login {
+form {
 	text-align:center;
 }
 </style>
-<div id="login">
 <form method=post>
 <h1> 로그인 </h1>
 <p>ID: <input type=text name=id></p>
@@ -16,6 +15,5 @@
 <input type=submit value=로그인>
 </dl>
 </form>
-</div>
 {% endblock %}
 </html>
