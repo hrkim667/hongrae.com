@@ -1,20 +1,17 @@
 from flask import Flask, render_template, session, request, url_for, redirect
 from apps.database import db_session
+from apps.models import User, PMEB
 
 app = Flask(__name__)
 app.secret_key =b'JSz\xf8\x1cR\xdd\x04\xbf>\x15d\x02\x8c\x08\xc0*\x8f?d\x89:\x0b\x87'
 
-def userList():
-    from apps.models import User
-    
+def userList(): 
     user = list()
     for u in User.query.all():
         user.append(str(u))
     return user
 
-def pmebList():
-    from apps.models import PMEB
-    
+def pmebList():   
     pmeb = list()
     for p in PMEB.query.all():
         s = str(p).split(", ")
