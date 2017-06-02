@@ -8,11 +8,18 @@
 	width:1000px;
 	margin:auto;
 }
-h1 {
+form {
 	text-align:center;
 }
 </style>
+<form method=post>
 <h1> 용돈 기입장 </h1>
+<form>
+<input type=date name="date">
+<input type=text name="content">
+<input type=number name="money">
+<input type=submit value="추가하기">
+</form>
 <table border="1", id="table">
 <tr>
 <th> 날짜 </th>
@@ -27,5 +34,6 @@ h1 {
 </tr>
 {% endfor %}
 </table>
+<br>
 {% endblock %}
 </html>

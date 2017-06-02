@@ -6,7 +6,7 @@ class User(Base):
 
     num = Column(Integer, primary_key=True)
     id = Column(String(10), unique=True)
-    pw = Column(String, unique=True)
+    pw = Column(String)
 
     def __init__(self, id=None, pw=None):
         self.id = id
@@ -20,10 +20,10 @@ class PMEB(Base):
     __tablename__ = 'pmeb'
 
     num = Column(Integer, primary_key=True)
-    id = Column(String(10), unique=True)
-    date = Column(String(10), unique=True)
-    content = Column(String, unique=True)
-    money = Column(Integer, unique=True)
+    id = Column(String(10))
+    date = Column(String(10))
+    content = Column(String)
+    money = Column(Integer)
 
     def __init__(self, id=None, date=None, content=None, money=None):
         self.id = id
