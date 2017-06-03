@@ -1,0 +1,39 @@
+{% extends "menu.html" %}
+<html>
+{% block menu %}
+{{ super() }}
+<style>
+#table {
+	text-align:center;
+	width:1000px;
+	margin:auto;
+}
+form {
+	text-align:center;
+}
+</style>
+<form method=post>
+<h1> 스케줄러 </h1>
+<form>
+<input type=date name="date">
+<input type=text name="content">
+<input type=submit value="추가하기">
+</form>
+<table border="1", id="table">
+<tr>
+<th> 날짜 </th>
+<th> 내용 </th>
+<th> </th>
+</tr>
+{% for S in schedule %}
+<tr>
+{% for s in S %}
+<td> {{ s }} </td>
+{% endfor %}
+<td><button> X </button>
+</tr>
+{% endfor %}
+</table>
+<br>
+{% endblock %}
+</html>

@@ -1,19 +1,23 @@
 from flask import Flask, render_template, session, request, url_for, redirect
 from apps.database import db_session
-from apps.models import PMEB
+from apps.models import PMEB, Schedule
 
 app = Flask(__name__)
 app.secret_key =b'JSz\xf8\x1cR\xdd\x04\xbf>\x15d\x02\x8c\x08\xc0*\x8f?d\x89:\x0b\x87'
 
 def pmebList():   
     pmeb = list()
-    for p in PMEB.query.all():
-        s = str(p).split(", ")
-        try:
-            pmeb.append(s)
-        except:
-            pass
+    for P in PMEB.query.all():
+        p = str(P).split(", ")
+        pmeb.append(p)
     return pmeb
+
+def scheduleList():
+    schedule = list()
+    for S in Schedule.query.all():
+        s = str(S).split(", ")
+        schedule.append(s)
+    return schedule
 
 def confirmLogin():
     try:
@@ -23,6 +27,12 @@ def confirmLogin():
             return False
     except:
         return False
+
+def redirectLogin():
+    if confirmLogin() == False:
+        return redirect(url_for("login"))
+    else:
+        pass
 
 @app.teardown_request
 def shutdown_session(exception=None):
@@ -52,8 +62,8 @@ def logout():
 
 @app.route("/pmeb", methods=["GET", "POST"])
 def pmeb():
-    if confirmLogin() == False:
-        return redirect(url_for('login'))
+    if redirectLogin() != None:
+        return redirectLogin()
     else:
         if request.method == 'POST':        
             date = request.form["date"]
@@ -67,3 +77,18 @@ def pmeb():
                         
             return redirect(url_for("pmeb"))
         return render_template("pmeb.html", pmeb=pmebList())
+
+@app.route("/schedule", methods=["GET", "POST"])
+def schdule():
+    if redirectLogin() != None:
+        return redirectLogin()
+    else:
+        if request.method == "POST":
+            date = request.form["date"]
+            content = request.form["content"]
+
+            s = Schedule(str(date), str(content))
+
+            db_session.add(s)
+            db_session.commit()
+        return render_template("schedule.html", schedule=scheduleList())
