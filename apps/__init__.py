@@ -1,22 +1,15 @@
 from flask import Flask, render_template, session, request, url_for, redirect
 from apps.database import db_session
-from apps.models import User, PMEB
+from apps.models import PMEB
 
 app = Flask(__name__)
 app.secret_key =b'JSz\xf8\x1cR\xdd\x04\xbf>\x15d\x02\x8c\x08\xc0*\x8f?d\x89:\x0b\x87'
-
-def userList(): 
-    user = list()
-    for u in User.query.all():
-        user.append(str(u))
-    return user
 
 def pmebList():   
     pmeb = list()
     for p in PMEB.query.all():
         s = str(p).split(", ")
         try:
-            s.pop(s.index(session["user"].split(", ")[0]))
             pmeb.append(s)
         except:
             pass
@@ -24,7 +17,7 @@ def pmebList():
 
 def confirmLogin():
     try:
-        if session["user"] in userList():
+        if session["pw"] == "hongrae":
             return True
         else:
             return False
@@ -44,11 +37,9 @@ def login():
     if confirmLogin() == True:
         return redirect(url_for("index"))
     if request.method == 'POST':
-        id = request.form["id"]
         pw = request.form["pw"]
-        user = "{0}, {1}".format(id, pw)
-        if user in userList():
-            session["user"] = user
+        if pw == "hongrae":
+            session["pw"] = "hongrae"
             return redirect(url_for("index"))
         else:
             return render_template("login.html", login=confirmLogin(), message="Please try again")
@@ -56,7 +47,7 @@ def login():
 
 @app.route("/logout")
 def logout():
-    session.pop("user", None)
+    session.pop("pw", None)
     return redirect(url_for("index"))
 
 @app.route("/pmeb", methods=["GET", "POST"])
@@ -64,14 +55,12 @@ def pmeb():
     if confirmLogin() == False:
         return redirect(url_for('login'))
     else:
-        if request.method == 'POST':
-            from apps.models import PMEB
-            
+        if request.method == 'POST':        
             date = request.form["date"]
             content = request.form["content"]
             money = request.form["money"]
 
-            p = PMEB(session["user"].split(", ")[0], str(date), str(content), int(money))
+            p = PMEB(str(date), str(content), int(money))
 
             db_session.add(p)
             db_session.commit()

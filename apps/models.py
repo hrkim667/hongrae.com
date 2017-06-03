@@ -1,36 +1,20 @@
 from sqlalchemy import Column, Integer, String
 from apps.database import Base
 
-class User(Base):
-    __tablename__ = 'user'
-
-    num = Column(Integer, primary_key=True)
-    id = Column(String(10), unique=True)
-    pw = Column(String)
-
-    def __init__(self, id=None, pw=None):
-        self.id = id
-        self.pw = pw
-
-    def __repr__(self):
-        return "{0}, {1}".format(self.id, self.pw)
-
 class PMEB(Base):
 
     __tablename__ = 'pmeb'
 
     num = Column(Integer, primary_key=True)
-    id = Column(String(10))
     date = Column(String(10))
     content = Column(String)
     money = Column(Integer)
 
-    def __init__(self, id=None, date=None, content=None, money=None):
-        self.id = id
+    def __init__(self, date=None, content=None, money=None):
         self.date = date
         self.content = content
         self.money = money
 
     def __repr__(self):
-        return "{0}, {1}, {2}, {3}".format(self.id, self.date, self.content, self.money)
+        return "{0}, {1}, {2}".format(self.date, self.content, self.money)
 
